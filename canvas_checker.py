@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 from webdriver_manager.firefox import GeckoDriverManager
 from dotenv import load_dotenv
+from excel_writer import criar_excel_frequencia
 import os
 import time
 
@@ -276,8 +277,8 @@ class WebAlunoChecker:
 
 def main():
     # Credenciais fixas conforme fornecidas
-    username = "mateus.cruz1@pucpr.edu.br"
-    password = "Bem-vindo##8649"
+    username = "1234567890"
+    password = "1234567890"
     
     checker = WebAlunoChecker()
     
@@ -290,6 +291,8 @@ def main():
                 if materias:
                     print(f"\nTotal de matérias encontradas: {len(materias)}")
                     checker.calcular_status_frequencia(materias)
+                    # Cria o arquivo Excel
+                    criar_excel_frequencia(materias)
                 else:
                     print("Nenhuma matéria encontrada")
             else:
