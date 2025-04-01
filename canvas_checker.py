@@ -45,27 +45,27 @@ class WebAlunoChecker:
         try:
             print("Acessando a página do WebAluno...")
             self.driver.get(self.url)
-            time.sleep(5)  # Aguarda a página carregar completamente
+            time.sleep(2)  # Reduzido de 5 para 2
             
             print("Aceitando cookies...")
             # Aguarda e clica no botão de aceitar cookies
-            cookie_button = WebDriverWait(self.driver, 20).until(
+            cookie_button = WebDriverWait(self.driver, 10).until(  # Reduzido de 20 para 10
                 EC.element_to_be_clickable((By.ID, "onetrust-accept-btn-handler"))
             )
             cookie_button.click()
-            time.sleep(2)  # Aguarda o botão de cookies desaparecer
+            time.sleep(1)  # Reduzido de 2 para 1
             
             print("Clicando no botão de login da Microsoft...")
             # Aguarda e clica no botão da Microsoft
-            microsoft_button = WebDriverWait(self.driver, 20).until(
+            microsoft_button = WebDriverWait(self.driver, 10).until(  # Reduzido de 20 para 10
                 EC.element_to_be_clickable((By.XPATH, '//*[@id="MICROSOFT_ASC"]/div/button'))
             )
             microsoft_button.click()
-            time.sleep(3)  # Aguarda a página da Microsoft carregar
+            time.sleep(2)  # Reduzido de 3 para 2
             
             print("Preenchendo email...")
             # Aguarda o campo de email da Microsoft
-            email_field = WebDriverWait(self.driver, 20).until(
+            email_field = WebDriverWait(self.driver, 10).until(  # Reduzido de 20 para 10
                 EC.presence_of_element_located((By.ID, "i0116"))
             )
             email_field.clear()  # Limpa o campo antes de digitar
@@ -73,15 +73,15 @@ class WebAlunoChecker:
             
             print("Clicando em próximo...")
             # Clica no botão próximo
-            next_button = WebDriverWait(self.driver, 10).until(
+            next_button = WebDriverWait(self.driver, 5).until(  # Reduzido de 10 para 5
                 EC.element_to_be_clickable((By.ID, "idSIButton9"))
             )
             next_button.click()
-            time.sleep(3)  # Aguarda a página de senha carregar
+            time.sleep(2)  # Reduzido de 3 para 2
             
             print("Preenchendo senha...")
             # Aguarda o campo de senha
-            password_field = WebDriverWait(self.driver, 20).until(
+            password_field = WebDriverWait(self.driver, 10).until(  # Reduzido de 20 para 10
                 EC.presence_of_element_located((By.ID, "i0118"))
             )
             password_field.clear()  # Limpa o campo antes de digitar
@@ -89,7 +89,7 @@ class WebAlunoChecker:
             
             print("Clicando em entrar...")
             # Clica no botão de login
-            sign_in_button = WebDriverWait(self.driver, 10).until(
+            sign_in_button = WebDriverWait(self.driver, 5).until(  # Reduzido de 10 para 5
                 EC.element_to_be_clickable((By.ID, "idSIButton9"))
             )
             sign_in_button.click()
@@ -97,7 +97,7 @@ class WebAlunoChecker:
             print("Verificando botão 'Não' para manter conectado...")
             # Aguarda e clica no botão "Não" para manter conectado
             try:
-                stay_signed_in = WebDriverWait(self.driver, 5).until(
+                stay_signed_in = WebDriverWait(self.driver, 3).until(  # Reduzido de 5 para 3
                     EC.element_to_be_clickable((By.ID, "idBtn_Back"))
                 )
                 stay_signed_in.click()
@@ -106,7 +106,7 @@ class WebAlunoChecker:
                 print("Botão 'Não' não encontrado, continuando...")
             
             # Aguarda o carregamento da página do WebAluno
-            time.sleep(5)
+            time.sleep(3)  # Reduzido de 5 para 3
             
             return True
             
@@ -119,7 +119,7 @@ class WebAlunoChecker:
         try:
             print("Abrindo menu de navegação...")
             # Aguarda a página carregar completamente
-            time.sleep(5)
+            time.sleep(2)  # Reduzido de 5 para 2
             
             # Tenta encontrar o botão de navegação usando JavaScript
             print("Procurando botão de navegação...")
@@ -131,7 +131,7 @@ class WebAlunoChecker:
                 print("Botão encontrado, tentando clicar...")
                 # Usa JavaScript para clicar no botão
                 self.driver.execute_script("arguments[0].click();", nav_button)
-                time.sleep(2)  # Aguarda o menu abrir
+                time.sleep(1)  # Reduzido de 2 para 1
                 
                 print("Procurando link de frequência...")
                 # Tenta diferentes métodos para encontrar o link de frequência
@@ -139,7 +139,7 @@ class WebAlunoChecker:
                 
                 # Método 1: Usando XPath
                 try:
-                    frequencia_link = WebDriverWait(self.driver, 5).until(
+                    frequencia_link = WebDriverWait(self.driver, 3).until(  # Reduzido de 5 para 3
                         EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/nav/div[2]/div[2]/ul/li[4]/a'))
                     )
                 except:
@@ -153,7 +153,7 @@ class WebAlunoChecker:
                             arguments[0].scrollIntoView(true);
                             arguments[0].click();
                         """, frequencia_link)
-                        time.sleep(3)
+                        time.sleep(2)  # Reduzido de 3 para 2
                         print("Navegação para frequência concluída!")
                         return True
                             
@@ -175,7 +175,7 @@ class WebAlunoChecker:
         """Coleta os dados de frequência de todas as matérias"""
         try:
             print("Coletando dados de frequência...")
-            time.sleep(5)  # Aguarda a página carregar completamente
+            time.sleep(2)  # Reduzido de 5 para 2
             
             # Lista para armazenar os dados das matérias
             materias = []
@@ -219,7 +219,6 @@ class WebAlunoChecker:
                         print("-" * 50)
                     
                 except Exception as e:
-                    # Ignora erros em linhas vazias ou inválidas
                     continue
             
             if materias:
@@ -276,9 +275,14 @@ class WebAlunoChecker:
         self.driver.quit()
 
 def main():
-    # Credenciais fixas conforme fornecidas
-    username = "1234567890"
-    password = "1234567890"
+    # Obtém as credenciais das variáveis de ambiente
+    username = os.getenv('WEALUNO_USERNAME')
+    password = os.getenv('WEALUNO_PASSWORD')
+    
+    if not username or not password:
+        print("Erro: Credenciais não encontradas nas variáveis de ambiente.")
+        print("Por favor, configure WEALUNO_USERNAME e WEALUNO_PASSWORD no arquivo .env")
+        return
     
     checker = WebAlunoChecker()
     
